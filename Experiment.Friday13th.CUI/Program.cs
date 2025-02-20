@@ -70,6 +70,7 @@ namespace Experiment.Friday13th.CUI
                 }
             }
 
+            Console.WriteLine($"13日の金曜日は平均して年に {(double)count / totalYears:F2} 回あります。");
             Console.WriteLine($"任意の月の13日が金曜日である確率は {(double)count / (totalYears * 12):P2} です。(参考: 1/7 = {1.0 / 7.0:P2})");
             Console.WriteLine($"13日の金曜日がない年は全体の {(double)count_0 / totalYears:P2} です。");
             Console.WriteLine($"13日の金曜日が1日だけある年は全体の {(double)count_1 / totalYears:P2} です。");
