@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
 
 namespace Experiment.Friday13th.CUI
 {
-    internal class Program
+    internal sealed class Program
     {
         private const int _BASE_YEAR = 2000;    // 起点となる年
         private const int _N_YEARS = 400;       // うるう年が一周する周期(年)
         private const int _DAYS_OF_WEEK = 7;    // 一週間の日数
 
-        static void Main(string[] args)
+        private static void Main()
         {
 
             // _N_YEARS が何日分に相当するかを求める
@@ -38,6 +39,7 @@ namespace Experiment.Friday13th.CUI
             // totalYears 年間の13日の金曜日をすべて洗い出す
             for (var year = _BASE_YEAR; year < _BASE_YEAR + totalYears; ++year)
             {
+                var dates = new List<string>();
                 var n = 0;
                 for (var month = 1; month <= 12; ++month)
                 {
@@ -46,6 +48,7 @@ namespace Experiment.Friday13th.CUI
                     {
                         ++count;
                         ++n;
+                        dates.Add($"{month}月13日");
                     }
                 }
 
@@ -66,10 +69,14 @@ namespace Experiment.Friday13th.CUI
                     default:
                         ++count_4;
                         break;
-
                 }
+
+                Console.WriteLine($"{year} 年の13日の金曜日: {string.Join(", ", dates)}{(DateTime.DaysInMonth(year, 2) > 28 ? " (うるう年)" : "")}");
             }
 
+            Console.WriteLine($"以降、{totalYears:N0} 年周期で繰り返します。");
+            Console.WriteLine("-----");
+            Console.WriteLine($"うるう年を考慮すると、年月日と曜日の対応は {totalYears:N0} 年で一周します。これは {totalDays:N0} 日間であり、{totalDays / _DAYS_OF_WEEK:N0} 週間です。");
             Console.WriteLine($"13日の金曜日は平均して年に {(double)count / totalYears:F2} 回あります。");
             Console.WriteLine($"任意の月の13日が金曜日である確率は {(double)count / (totalYears * 12):P2} です。(参考: 1/7 = {1.0 / 7.0:P2})");
             Console.WriteLine($"13日の金曜日がない年は全体の {(double)count_0 / totalYears:P2} です。");
